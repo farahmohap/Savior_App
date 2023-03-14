@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "948832859087",
+    "project_id": "savior-eedb3",
+    "storage_bucket": "savior-eedb3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948832859087:android:89d0062afab8a7bae798ba",
+        "android_client_info": {
+          "package_name": "com.example.application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948832859087-5h5vm6pprer8q9eusfvmhtssogl43hnf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCG3Vzms903_kMLQHmYoNeAnHzx2HFuSI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948832859087-5h5vm6pprer8q9eusfvmhtssogl43hnf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "948832859087-ldla2qn4fks7lrf1rvkadasr3qtn1in2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.application"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

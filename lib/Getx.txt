@@ -1,0 +1,16 @@
+*MaterialApp ===getMaterialApp
+1-Route Management ->
+Navigator===
+Get.to(pagename()); //push to stack
+Get.off(pagename()); //pushReplacement,delete current page from stack
+Get.offAll(pagename()); //pushAndRemoveUntil بتمسح كل الصفح اللي قبلها
+Get.back(pagename()); //maybepop يعني لو في قبلها ترجع ..مفيش مترجعش اوتخرج من الابليكشن
+
+**ٌRoute (named)**
+routes{"/home":(context)=>Home()}
+===
+getPages[GetPage(name:"/home",page:()=>Home()),
+GetPage(name:"/home",page:()=>Home())
+]
+Get.toNamed("/home") //pushNamed
+Get.offNamed("/home") //pushReplacementNamed

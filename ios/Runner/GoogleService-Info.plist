@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>948832859087-ldla2qn4fks7lrf1rvkadasr3qtn1in2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.948832859087-ldla2qn4fks7lrf1rvkadasr3qtn1in2</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDnoNwbTeIG9fFtBAnUOonBsieBTeCod3s</string>
+	<key>GCM_SENDER_ID</key>
+	<string>948832859087</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.application</string>
+	<key>PROJECT_ID</key>
+	<string>savior-eedb3</string>
+	<key>STORAGE_BUCKET</key>
+	<string>savior-eedb3.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:948832859087:ios:1539db6d80343d15e798ba</string>
+</dict>
+</plist>
