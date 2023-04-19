@@ -1,50 +1,16 @@
-import 'package:application/views/dragabble.dart';
-import 'package:application/views/info.dart';
-import 'package:application/views/styles.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../controllers/home_page_controllers/getdata.dart';
 
-class Nav {
-  static getNav(context, int index) {
-    return CurvedNavigationBar(
-        height: 60,
-        index: index,
-        backgroundColor: Colors.transparent,
-        buttonBackgroundColor: Style.darkblue,
-        color: Style.darkblue,
-        animationDuration: const Duration(microseconds: 10),
-        animationCurve: Curves.easeInOutCubic,
-        onTap: (index) {
-          print(index);
-          if (index == 0) {
-            Get.off(DragHome());
-          }
-        },
-        items: const [
-          Icon(
-            Icons.home,
-            color: Colors.white,
-          ),
-          Icon(Icons.location_on_outlined, color: Colors.white),
-          Icon(Icons.device_hub_rounded, color: Colors.white),
-          Icon(Icons.emergency, color: Colors.white),
-          Icon(Icons.settings, color: Colors.white),
-        ]);
-  }
-}
+import 'package:application/views/features/info.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../models/getdata.dart';
+
 
 class Location {
   static getMapp(context) {
-   // var myMarker = HashSet<Marker>();
     final Set<Marker> markers = new Set(); //markers for google map
     late GoogleMapController mapController; //controller for Google map
-
-    LatLng showLocation = LatLng(
-        GetData.latitiude!.value, GetData.longitude!.value);
+    LatLng showLocation = LatLng(double.parse(GetData.latitiude!), double.parse(GetData.longitude!));
+    
     Set<Marker> getmarkers() {
       //markers to place on map
       // setState(() {
@@ -57,8 +23,8 @@ class Location {
         position: showLocation, //position of marker
         onTap: (() {
           //setState(() {
-         Get.to(Info()); //Info(bpm,spo2,showlocation)
-                  
+          Get.to(Info(bpm:GetData.bpm,spo2:GetData.spo2,user: GetData.name,age:GetData.age,phone:GetData.phone,)); //Info(bpm,spo2,showlocation)
+
           //  });
         }),
         infoWindow: InfoWindow(
@@ -67,7 +33,7 @@ class Location {
             snippet: 'Stable',
             onTap: (() {
               // setState(() {
-              Get.to(Info());
+             Get.to(Info(bpm:GetData.bpm,spo2:GetData.spo2,user: GetData.name,age:GetData.age,phone:GetData.phone,));
               // });
             })),
         icon: BitmapDescriptor.defaultMarker, //Icon for Marker
@@ -100,3 +66,4 @@ class Location {
     );
   }
 }
+

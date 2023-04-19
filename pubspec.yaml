@@ -38,13 +38,20 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.6.1
   firebase_database: ^10.0.13
+  firebase_auth: ^4.2.8
+  cloud_firestore: ^4.4.2
+  firebase_storage: ^11.0.13
   animated_bottom_navigation_bar:
   curved_navigation_bar:
+  google_sign_in: '^6.0.2'
   google_maps_flutter:
   proste_bezier_curve:
   flutter_polyline_points:
   flutter_custom_clippers:
+  flutter_phone_direct_caller: ^2.1.1
   wave:
+  url_launcher: ^6.1.10
+  path: ^1.7.0
   floating_overlay:
   fl_animated_linechart:
   sqflite:
@@ -57,6 +64,15 @@ dependencies:
   flutter_image_slideshow:
   searchbar_animation:
   draggable_home:
+  toggle_switch: ^2.0.1
+  awesome_dialog: ^3.0.2
+  image_picker: ^0.8.6+1
+  awesome_notifications: ^0.7.4+1
+  carousel_slider: ^4.2.1
+
+
+
+
 
 dev_dependencies:
   flutter_test:
