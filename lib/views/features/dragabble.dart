@@ -127,8 +127,7 @@ class _DragHomeState extends State<DragHome> with TickerProviderStateMixin {
         ),
         SizedBox(height: 40, child: TeamMembersView()),
         SizedBox(
-          height: 20,
-        ),
+          height: 20,),
         Container(
           padding: EdgeInsets.only(
             left: 30,
