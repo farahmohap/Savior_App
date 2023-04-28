@@ -1,4 +1,6 @@
 import 'package:application/views/styles.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:get/state_manager.dart';
 import 'package:lottie/lottie.dart ' as lot;
 import 'package:flutter/material.dart';
 
@@ -6,13 +8,13 @@ class HealthStatus extends StatefulWidget {
   var bpm;
   var spo2;
 
-  HealthStatus({
-    required bpm,
-    required spo2,
-  }) {
-    this.bpm = bpm;
-    this.spo2 = spo2;
-  }
+  // HealthStatus({
+  //   required bpm,
+  //   required spo2,
+  // }) {
+  //   this.bpm = bpm;
+  //   this.spo2 = spo2;
+  // }
 
   @override
   State<HealthStatus> createState() => _HealthStatusState();
@@ -35,39 +37,49 @@ class _HealthStatusState extends State<HealthStatus>
     }
   }
 
-  void dispose() {
-    _heartbeat.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        // for (int i = 0; i < GetData.data.length; i++)
-        Row(
+        final databaseReference = FirebaseDatabase.instance.ref().child('ESP32-v1');
+
+    return StreamBuilder<DatabaseEvent>(
+      stream: databaseReference.onValue,
+      builder: (context,AsyncSnapshot snapshot) {
+         if (!snapshot.hasData) {
+                return CircularProgressIndicator();
+              }
+         final data = Map<String, dynamic>.from(snapshot.data.snapshot.value);
+          final bpm = data['heartrate'];
+           final spo2 = data['spo2'];
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(
-              child: healthStatusItem(
-                  Color.fromARGB(255, 88, 158, 255),
-                  this.widget.bpm,
-                  "bpm ",
-                  'assests/heart.json',
-                  "Heart Rate",
-                  72,
-                  19),
-            ),
-            Expanded(
-              child: healthStatusItem(Style.darkblue, this.widget.spo2, "%",
-                  'assests/oxygen.json', "Oxygen Saturation", 70, 16),
-            ),
-            Expanded(
-              child: healthStatusItem(Color.fromARGB(255, 247, 208, 67), "30",
-                  " m ", 'assests/distance.json', "Distance", 70, 19),
-            ),
+            // for (int i = 0; i < GetData.data.length; i++)
+            Row(
+              children: [
+                Expanded(
+                  child: healthStatusItem(
+                     const  Color.fromARGB(255, 88, 158, 255),
+                      bpm.toString(),
+                      "bpm ",
+                      'assests/heart.json',
+                      "Heart Rate",
+                      72,
+                      19),
+                ),
+                Expanded(
+                  child: healthStatusItem(Style.darkblue, spo2.toString(), "%",
+                      'assests/oxygen.json', "Oxygen Saturation", 70, 16),
+                ),
+                Expanded(
+                  child: healthStatusItem(Color.fromARGB(255, 247, 208, 67), "30",
+                      " m ", 'assests/distance.json', "Distance", 70, 19),
+                ),
+              ],
+            )
           ],
-        ),
-      ],
+        );
+      }
     );
   }
 

@@ -6,7 +6,9 @@ import 'package:application/views/auth/signin.dart';
 import 'package:application/views/features/devices.dart';
 import 'package:application/views/features/dragabble.dart';
 import 'package:application/views/features/info.dart';
+import 'package:application/views/reusable.dart';
 import 'package:application/views/settings/settings.dart';
+import 'package:application/views/widgets/test.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   AwesomeNotifications().initialize(
-      'resource://drawable/blue.png',
+      'resource://drawable/blue.png',//icon || null
       [
         NotificationChannel(
             channelKey: 'Basic Key',
@@ -34,7 +36,7 @@ void main() async {
             //soundSource: "assests/row/emergency.mp3",
             )
       ],
-      debug: true);
+     );
   runApp(MyApp());
 }
 

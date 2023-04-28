@@ -24,12 +24,13 @@ class GetData {
       bpm = event.snapshot.child("heartrate").value.toString();
       spo2 = event.snapshot.child("spo2").value.toString();
       //time = event.snapshot.child('time').value;   
-      databaseReference.onValue.listen((event) {
+      
+    });
+    databaseReference.onValue.listen((event) {
         name = event.snapshot.child('username').value.toString();
         age = event.snapshot.child('age').value.toString();
         phone = event.snapshot.child('phoneNumber').value.toString();
       });
-    });
   }
 
   static notifi() {
