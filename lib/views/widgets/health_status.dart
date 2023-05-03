@@ -1,5 +1,7 @@
+import 'package:application/models/getdata.dart';
 import 'package:application/views/styles.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:lottie/lottie.dart ' as lot;
 import 'package:flutter/material.dart';
@@ -23,6 +25,7 @@ class HealthStatus extends StatefulWidget {
 class _HealthStatusState extends State<HealthStatus>
     with TickerProviderStateMixin {
   late AnimationController _heartbeat;
+  DatabaseReference infoRef = FirebaseDatabase.instance.ref('ESP32-v1');
 
   @override
   void initState() {
@@ -34,64 +37,75 @@ class _HealthStatusState extends State<HealthStatus>
       _heartbeat.reset();
     } else {
       _heartbeat.repeat();
+      GetData.notificationAction();
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-        final databaseReference = FirebaseDatabase.instance.ref().child('ESP32-v1');
-
     return StreamBuilder<DatabaseEvent>(
-      stream: databaseReference.onValue,
-      builder: (context,AsyncSnapshot snapshot) {
-         if (!snapshot.hasData) {
-                return CircularProgressIndicator();
-              }
-         final data = Map<String, dynamic>.from(snapshot.data.snapshot.value);
+        stream: infoRef.onValue,
+        builder: (context, AsyncSnapshot snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final data = Map<String, dynamic>.from(snapshot.data.snapshot.value);
           final bpm = data['heartrate'];
-           final spo2 = data['spo2'];
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // for (int i = 0; i < GetData.data.length; i++)
-            Row(
-              children: [
-                Expanded(
-                  child: healthStatusItem(
-                     const  Color.fromARGB(255, 88, 158, 255),
-                      bpm.toString(),
-                      "bpm ",
-                      'assests/heart.json',
-                      "Heart Rate",
-                      72,
-                      19),
-                ),
-                Expanded(
-                  child: healthStatusItem(Style.darkblue, spo2.toString(), "%",
-                      'assests/oxygen.json', "Oxygen Saturation", 70, 16),
-                ),
-                Expanded(
-                  child: healthStatusItem(Color.fromARGB(255, 247, 208, 67), "30",
-                      " m ", 'assests/distance.json', "Distance", 70, 19),
-                ),
-              ],
-            )
-          ],
-        );
-      }
-    );
+          final spo2 = data['spo2'];
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // for (int i = 0; i < GetData.data.length; i++)
+              Row(
+                children: [
+                  Expanded(
+                    child: healthStatusItem(
+                        const Color.fromARGB(255, 88, 158, 255),
+                        bpm.toString(),
+                        "bpm ",
+                        'assests/heart.json',
+                        "Heart Rate".tr,
+                        72,
+                        19),
+                  ),
+                  Expanded(
+                    child: healthStatusItem(
+                        Style.darkblue,
+                        spo2.toString(),
+                        "%",
+                        'assests/oxygen.json',
+                        "Oxygen Saturation".tr,
+                        70,
+                        16),
+                  ),
+                  Expanded(
+                    child: healthStatusItem(
+                        Color.fromARGB(255, 247, 208, 67),
+                        "30",
+                        " m ",
+                        'assests/distance.json',
+                        "Distance".tr,
+                        70,
+                        19),
+                  ),
+                ],
+              )
+            ],
+          );
+        });
   }
 
   AnimatedContainer healthStatusItem(Color color, data, String measuringUnit,
       String iconPath, title, double iconsize, double fontsize) {
     return AnimatedContainer(
       margin: EdgeInsets.only(top: 15),
-      height: 190,
+      height: 213,
       duration: Duration(milliseconds: 50),
       child: InkWell(
         radius: 200,
+        
         child: Card(
+          
           color: color,
           child: Container(
             margin: EdgeInsets.all(10),

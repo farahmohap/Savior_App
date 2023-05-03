@@ -33,7 +33,7 @@ class TeamMembersView extends StatelessWidget {
 
   @override
   void initState() {
-    GetData.getData();
+   // GetData.getData();
     FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     final userId = user?.uid;

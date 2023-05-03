@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class BandInfo extends StatelessWidget {
   var user;
@@ -17,21 +18,21 @@ class BandInfo extends StatelessWidget {
         bandInfoItem(
           Color.fromARGB(255, 205, 211, 222),
           "images/headband.png",
-          "ID",
+          "ID".tr,
           "11F455d",
         ),
         bandInfoItem(Color.fromARGB(255, 181, 199, 235),
-            "images/headbandUser.png", "Username", this.user),
+            "images/headbandUser.png", "Username".tr, this.user),
         bandInfoItem(
           Color.fromARGB(255, 142, 176, 243),
           "images/agerange.png",
-          "Age",
+          "Age".tr,
           this.age,
         ),
         bandInfoItem(
           Color.fromARGB(255, 79, 118, 189),
           "images/phone.png",
-          "Phone",
+          "Phone".tr,
           this.phone,
         ),
       ],

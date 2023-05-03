@@ -26,8 +26,8 @@ class ConnectUser {
         context: context,
         builder: ((context) => AlertDialog(
               elevation: 50,
-              icon: Row(
-                children: [
+              icon:  Row(
+                children:const [
                   Icon(
                     Icons.app_registration_rounded,
                     color: Colors.green,

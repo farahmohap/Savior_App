@@ -4,7 +4,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../controllers/infoController.dart';
 
 class GetLocation extends StatefulWidget {
   const GetLocation({super.key});
@@ -16,17 +15,9 @@ class GetLocation extends StatefulWidget {
 class _LocationState extends State<GetLocation> {
   final Set<Marker> markers = {}; //markers for google map
   late GoogleMapController mapController; //controller for Google map
-  final databaseReference = FirebaseDatabase.instance.ref().child('ESP32-v1');
-  LatLng showLocation = LatLng(
-      double.parse(GetData.latitiude!), double.parse(GetData.longitude!));
-  InfoController controller = Get.put(InfoController());
-
-  @override
-  void initState() {
-    // TODO: implement initState
-
-    InfoController.getData();
-  }
+  // LatLng showLocation = LatLng(
+  //     double.parse(GetData.latitiude!), double.parse(GetData.longitude!));
+  DatabaseReference infoRef = FirebaseDatabase.instance.ref('ESP32-v1');
 
   // Set<Marker> getmarkers() {
   //   //markers to place on map
@@ -75,14 +66,14 @@ class _LocationState extends State<GetLocation> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<DatabaseEvent>(
-        stream: databaseReference.onValue,
+        stream: infoRef.onValue,
         builder: (context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           }
           final data = Map<String, dynamic>.from(snapshot.data.snapshot.value);
-          final lat = data['lat'];
-          final long = data['lon'];
+          double lat = data['latitude'];
+          double long = data['longitude'];
 
           return GoogleMap(
             //polylines: Set<Polyline>.of(polylines.values),
@@ -93,14 +84,15 @@ class _LocationState extends State<GetLocation> {
             myLocationButtonEnabled: true,
             cameraTargetBounds: CameraTargetBounds.unbounded,
             initialCameraPosition: CameraPosition(
-              target: showLocation,
+              target: LatLng(lat, long),
               zoom: 45,
             ),
+
             onMapCreated: (controller) {
               setState(() {
                 mapController = controller;
                 markers.add(Marker(
-                    markerId: MarkerId(showLocation.toString()),
+                    markerId: MarkerId(LatLng(lat, long).toString()),
                     position: LatLng(lat, long),
                     infoWindow: InfoWindow(
                         //popup info
@@ -116,8 +108,9 @@ class _LocationState extends State<GetLocation> {
                           ));
                         })),
                     icon: BitmapDescriptor.defaultMarker));
-                // _getPolyline();
               });
+
+              // _getPolyline();
             },
             markers: markers,
           );

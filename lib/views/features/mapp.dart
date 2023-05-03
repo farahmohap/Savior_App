@@ -38,13 +38,12 @@ class _MappState extends State<Mapp> {
     return Scaffold(
       extendBody: true,
       bottomNavigationBar: Nav.getNav(context, 1),
-      body:const  SizedBox(
-        height: double.infinity,
-        child: SafeArea(
+      body:
+        const SafeArea(     
           bottom: false,
            child: GetLocation()
         ),
-      ),
+      
     );
   }
 }

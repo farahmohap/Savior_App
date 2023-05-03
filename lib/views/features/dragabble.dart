@@ -7,8 +7,6 @@ import 'package:get/get.dart';
 import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
-
-import '../../controllers/locale_controller.dart';
 import '../widgets/carousel_slider.dart';
 
 class DragHome extends StatefulWidget {
@@ -21,9 +19,9 @@ class DragHome extends StatefulWidget {
 class _DragHomeState extends State<DragHome> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    MyLocaleController langcontroller = Get.find();
     int number = 122;
     return DraggableHome(
+      headerExpandedHeight: .35,
       backgroundColor: Colors.white,
       centerTitle: true,
       alwaysShowLeadingAndAction: true,
@@ -98,7 +96,7 @@ class _DragHomeState extends State<DragHome> with TickerProviderStateMixin {
                           ),
                         ),
                         Text(
-                          "How Can I Help You ?".tr,
+                          "How Can I Help You?".tr,
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -117,7 +115,7 @@ class _DragHomeState extends State<DragHome> with TickerProviderStateMixin {
             left: 10,
           ),
           alignment: Alignment.topLeft,
-          child: Text("Team Members",
+          child: Text("Team Members".tr,
               style: const TextStyle(
                 color: Style.darkblue,
                 fontSize: 22,
@@ -127,7 +125,23 @@ class _DragHomeState extends State<DragHome> with TickerProviderStateMixin {
         ),
         SizedBox(height: 40, child: TeamMembersView()),
         SizedBox(
-          height: 20,),
+          height: 20,
+        ),
+       //spacer
+      const  Divider(
+          color: Color.fromARGB(255, 218, 169, 165),
+          thickness: 1,
+          indent: 5,
+          endIndent: 5,
+        ),
+        Text(
+          "Services".tr,
+          style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 247, 66, 66)),
+        ),
+        ServicesHome(),
         Container(
           padding: EdgeInsets.only(
             left: 30,
@@ -160,20 +174,6 @@ class _DragHomeState extends State<DragHome> with TickerProviderStateMixin {
             ),
           ],
         ),
-        Divider(
-          color: Color.fromARGB(255, 218, 169, 165),
-          thickness: 1,
-          indent: 5,
-          endIndent: 5,
-        ),
-        Text(
-          "Services".tr,
-          style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 247, 66, 66)),
-        ),
-        ServicesHome()
       ],
     );
   }

@@ -50,6 +50,7 @@ dependencies:
   flutter_custom_clippers:
   flutter_phone_direct_caller: ^2.1.1
   wave:
+  shared_preferences: ^2.1.0
   url_launcher: ^6.1.10
   path: ^1.7.0
   floating_overlay:

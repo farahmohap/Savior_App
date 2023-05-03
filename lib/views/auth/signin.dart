@@ -1,16 +1,11 @@
+import 'package:application/controllers/signin_auth.dart';
 import 'package:application/views/auth/signup.dart';
 import 'package:application/views/features/dragabble.dart';
+import 'package:application/views/widgets/waves.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:proste_bezier_curve/proste_bezier_curve.dart';
-import 'package:flutter/widgets.dart';
-import 'package:proste_bezier_curve/utils/type/index.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
+
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -20,27 +15,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  var email = TextEditingController();
-  var password = TextEditingController();
-  var data_email;
-  var data_password;
-  ////////////////////////////////////////////////
-  Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +56,7 @@ class _SignInState extends State<SignIn> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Sign In",
+                            "Sign In".tr,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 40,
@@ -100,7 +75,7 @@ class _SignInState extends State<SignIn> {
                                 //maxLength: 70,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(),
-                                  labelText: 'Email Or Phone Number',
+                                  labelText: 'Email or Phone number'.tr,
                                   // hintText: 'Email Or Phone Number',
                                 )),
                           ),
@@ -116,7 +91,7 @@ class _SignInState extends State<SignIn> {
                                 //maxLength: 70,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(),
-                                  labelText: 'Password',
+                                  labelText: 'Password'.tr,
                                   //hintText: 'Password',
                                 )),
                           ),
@@ -127,7 +102,7 @@ class _SignInState extends State<SignIn> {
                                 style: ButtonStyle(
                                   alignment: Alignment.centerRight,
                                 ),
-                                child: Text("Forget Password",
+                                child: Text("Forget password".tr,
                                     //textDirection: TextDirection.ltr,
                                     //textAlign: TextAlign.left,
                                     style: TextStyle(
@@ -143,7 +118,7 @@ class _SignInState extends State<SignIn> {
                             textColor: Colors.black,
                             color: Color.fromARGB(255, 247, 208, 67),
                             child: Text(
-                              'Sign In',
+                              'Sign In'.tr,
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             onPressed: () async {
@@ -170,7 +145,7 @@ class _SignInState extends State<SignIn> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Don't Have Account?",
+                                "Don't have account?".tr,
                                 style: TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.bold,
@@ -182,7 +157,7 @@ class _SignInState extends State<SignIn> {
                                     Get.to(SignUp());
                                   },
                                   child: Text(
-                                    "Sign Up",
+                                    "Sign Up".tr,
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold),
@@ -195,32 +170,7 @@ class _SignInState extends State<SignIn> {
                 ],
               ),
             ),
-            Container(
-                margin: const EdgeInsets.only(top: 630, bottom: 0),
-
-                // alignment: Alignment.centerRight,
-                child: WaveWidget(
-                  //user Stack() widget to overlap content and waves
-                  config: CustomConfig(
-                    colors: [
-                      Color.fromARGB(255, 190, 196, 255).withOpacity(0.3),
-                      Color.fromARGB(255, 15, 56, 110).withOpacity(.4),
-                      Color.fromARGB(255, 35, 148, 214).withOpacity(.5),
-                      //the more colors here, the more wave will be
-                    ],
-                    durations: [4000, 5000, 7000],
-                    //durations of animations for each colors,
-                    // make numbers equal to numbers of colors
-                    heightPercentages: [0.01, 0.05, 0.03],
-                    //height percentage for each colors.
-                    blur: MaskFilter.blur(BlurStyle.solid, 5),
-                    //blur intensity for waves
-                  ),
-                  waveAmplitude: 35.00, //depth of curves
-                  waveFrequency: 3, //number of curves in waves
-                  //backgroundColor: Colors.white, //background colors
-                  size: Size(double.infinity, 150),
-                )),
+           Waves()
           ],
         ),
       )),

@@ -17,7 +17,7 @@ import 'package:path/path.dart' as path;
 
 import 'package:toggle_switch/toggle_switch.dart';
 
-import '../../controllers/locale_controller.dart';
+import '../../controllers/locale/locale_controller.dart';
 
 class Settingss extends StatefulWidget {
   const Settingss({super.key});
@@ -145,16 +145,18 @@ class _SettingssState extends State<Settingss> {
                       totalSwitches: 2,
                       changeOnTap: true,
                       animate: true,
-                      labels: ['En', 'Ar'],
+                      labels: const ['En', 'Ar'],
                       onToggle: (index) {
-                        if (index == 0)
+                        if (index == 0) {
                           setState(() {
-                            //   langcontroller.ChangedLanguage("en");
+                            langcontroller.changeLanguage("en");
                           });
-                        if (index == 1)
+                        }
+                        if (index == 1) {
                           setState(() {
-                            //  langcontroller.ChangedLanguage("ar");
+                            langcontroller.changeLanguage("ar");
                           });
+                        }
                       },
                     ),
                   ),

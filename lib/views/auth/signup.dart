@@ -1,15 +1,11 @@
 import 'package:application/views/auth/signin.dart';
+import 'package:application/views/widgets/waves.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:proste_bezier_curve/proste_bezier_curve.dart';
-import 'package:flutter/widgets.dart';
-import 'package:proste_bezier_curve/utils/type/index.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
+
+import '../../controllers/signup_auth.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -19,23 +15,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  var email = TextEditingController();
-  var password = TextEditingController();
-  var confirm_password = TextEditingController();
-  var name = TextEditingController();
-  var phone = TextEditingController();
-  var age = TextEditingController();
-  var adress = TextEditingController();
-  var national_id = TextEditingController();
-  var data_email;
-  var data_name;
-  var data_phone;
-  var data_age;
-  var data_national_id;
-  var data_password;
-  var data_confirm_password;
-  var data_adress;
-
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -66,7 +46,7 @@ class _SignUpState extends State<SignUp> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "Sign Up",
+                                "Sign Up".tr,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 40,
@@ -84,7 +64,7 @@ class _SignUpState extends State<SignUp> {
                                     //maxLength: 70,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(),
-                                      labelText: 'Full Name',
+                                      labelText: 'Full Name'.tr,
                                       // hintText: 'Email Or Phone Number',
                                     )),
                               ),
@@ -97,7 +77,7 @@ class _SignUpState extends State<SignUp> {
                                     //maxLength: 70,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(),
-                                      labelText: 'Email',
+                                      labelText: 'Email Address'.tr,
                                       //hintText: 'Password',
                                     )),
                               ),
@@ -122,7 +102,7 @@ class _SignUpState extends State<SignUp> {
                                     //maxLength: 70,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(),
-                                      labelText: 'Password',
+                                      labelText: 'Password'.tr,
                                     )),
                               ),
                               SizedBox(
@@ -134,7 +114,7 @@ class _SignUpState extends State<SignUp> {
                                     //maxLength: 70,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(),
-                                      labelText: 'Confirm Password',
+                                      labelText: 'Confirm Password'.tr,
                                       //hintText: 'Password',
                                     )),
                               ),
@@ -183,7 +163,7 @@ class _SignUpState extends State<SignUp> {
                                 textColor: Colors.black,
                                 color: Color.fromARGB(255, 247, 208, 67),
                                 child: Text(
-                                  'Sign Up',
+                                  'Sign Up'.tr,
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 onPressed: () async {
@@ -240,7 +220,7 @@ class _SignUpState extends State<SignUp> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Already Have Account?",
+                                    "Already Have Account?".tr,
                                     style: TextStyle(
                                       color: Colors.blue,
                                       fontWeight: FontWeight.bold,
@@ -257,7 +237,7 @@ class _SignUpState extends State<SignUp> {
                                                       const SignIn()));
                                         },
                                         child: Text(
-                                          "Sign In",
+                                          "Sign In".tr,
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
@@ -271,52 +251,10 @@ class _SignUpState extends State<SignUp> {
                     ],
                   ),
                 ),
-                Container(
-                    margin: const EdgeInsets.only(top: 630, bottom: 0),
-
-                    // alignment: Alignment.centerRight,
-                    child: WaveWidget(
-                      //user Stack() widget to overlap content and waves
-                      config: CustomConfig(
-                        colors: [
-                          Color.fromARGB(255, 190, 196, 255).withOpacity(0.3),
-                          Color.fromARGB(255, 15, 56, 110).withOpacity(.4),
-                          Color.fromARGB(255, 35, 148, 214).withOpacity(.5),
-                          //the more colors here, the more wave will be
-                        ],
-                        durations: [4000, 5000, 7000],
-                        //durations of animations for each colors,
-                        // make numbers equal to numbers of colors
-                        heightPercentages: [0.01, 0.05, 0.03],
-                        //height percentage for each colors.
-                        blur: MaskFilter.blur(BlurStyle.solid, 5),
-                        //blur intensity for waves
-                      ),
-                      waveAmplitude: 35.00, //depth of curves
-                      waveFrequency: 3, //number of curves in waves
-                      //backgroundColor: Colors.white, //background colors
-                      size: Size(double.infinity, 150),
-                    )),
+                Waves()
               ],
             ),
           )),
     );
   }
-}
-
-class WaveShape extends CustomClipper<Path> {
-  @override
-  getClip(Size size) {
-    double height = size.height;
-    double width = size.width;
-    var p = Path();
-    p.lineTo(0, 0);
-    p.cubicTo(width * 1 / 2, 0, width * 2 / 4, height, width, height);
-    p.lineTo(width, 0);
-    p.close();
-    return p;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper oldClipper) => true;
 }
