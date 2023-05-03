@@ -1,3 +1,4 @@
+import 'package:application/controllers/notifications_services.dart';
 import 'package:application/models/getdata.dart';
 import 'package:application/views/reusable.dart';
 import 'package:application/views/widgets/band_info.dart';
@@ -7,7 +8,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../widgets/location.dart';
-
 
 class Info extends StatefulWidget {
   var bpm;
@@ -35,14 +35,15 @@ class Info extends StatefulWidget {
 }
 
 class _InfoState extends State<Info> with TickerProviderStateMixin {
+  NotificationsServices notificationsServices = NotificationsServices();
   @override
   void initState() {
     super.initState();
     // GetData.getData();
     Location.getMapp(context);
-    GetData.notificationRequest();
-    GetData.notificationAction();
-
+    // GetData.notificationRequest();
+    // GetData.notificationAction();
+    notificationsServices.initialiseNotifications();
   }
 
   @override
@@ -79,7 +80,7 @@ class _InfoState extends State<Info> with TickerProviderStateMixin {
                       width: double.infinity,
                       child: Column(
                         children: [
-                         
+                        
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: InputDecorator(

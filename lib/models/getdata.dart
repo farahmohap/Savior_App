@@ -20,6 +20,7 @@ class GetData {
   DatabaseReference databaseReference =
       FirebaseDatabase.instance.ref('ESP32-v1/userInfo');
     infoRef.onValue.listen((DatabaseEvent event) {
+      
       latitiude = event.snapshot.child("lat").value.toString();
       longitude = event.snapshot.child("lon").value.toString();
       bpm = event.snapshot.child("heartrate").value.toString();

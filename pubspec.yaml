@@ -46,7 +46,8 @@ dependencies:
   google_sign_in: '^6.0.2'
   google_maps_flutter:
   proste_bezier_curve:
-  flutter_polyline_points:
+  flutter_polyline_points: ^1.0.0
+  location: ^4.4.0
   flutter_custom_clippers:
   flutter_phone_direct_caller: ^2.1.1
   wave:
@@ -69,6 +70,7 @@ dependencies:
   awesome_dialog: ^3.0.2
   image_picker: ^0.8.6+1
   awesome_notifications: ^0.7.4+1
+  flutter_local_notifications: ^14.0.0+1
   carousel_slider: ^4.2.1
 
 

@@ -88,7 +88,7 @@ class _DragHomeState extends State<DragHome> with TickerProviderStateMixin {
                         Container(
                           child: Text(
                             "Welcome Back!".tr,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 33,
                                 fontFamily: Style.fontfamily,
                                 fontWeight: FontWeight.bold,
@@ -97,7 +97,7 @@ class _DragHomeState extends State<DragHome> with TickerProviderStateMixin {
                         ),
                         Text(
                           "How Can I Help You?".tr,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             fontFamily: Style.fontfamily,
@@ -128,20 +128,7 @@ class _DragHomeState extends State<DragHome> with TickerProviderStateMixin {
           height: 20,
         ),
        //spacer
-      const  Divider(
-          color: Color.fromARGB(255, 218, 169, 165),
-          thickness: 1,
-          indent: 5,
-          endIndent: 5,
-        ),
-        Text(
-          "Services".tr,
-          style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 247, 66, 66)),
-        ),
-        ServicesHome(),
+      
         Container(
           padding: EdgeInsets.only(
             left: 30,
@@ -163,8 +150,8 @@ class _DragHomeState extends State<DragHome> with TickerProviderStateMixin {
               style: ButtonStyle(
                 alignment: Alignment.centerRight,
               ),
-              child: Text("MoreDetails".tr,
-                  style: TextStyle(
+              child:  Text("MoreDetails".tr,
+                  style:const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
                       color: Style.darkblue,
@@ -172,8 +159,24 @@ class _DragHomeState extends State<DragHome> with TickerProviderStateMixin {
                       decoration: TextDecoration.underline)),
               onPressed: () {},
             ),
+            
           ],
+          
         ),
+        const  Divider(
+          color: Color.fromARGB(255, 218, 169, 165),
+          thickness: 1,
+          indent: 5,
+          endIndent: 5,
+        ),
+        Text(
+          "Services".tr,
+          style: const TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 247, 66, 66)),
+        ),
+        ServicesHome(),
       ],
     );
   }

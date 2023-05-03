@@ -1,4 +1,5 @@
 import 'package:application/controllers/locale/locale_controller.dart';
+import 'package:application/controllers/notifications_services.dart';
 import 'package:application/views/auth/signin.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/foundation.dart';
@@ -13,23 +14,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  AwesomeNotifications().initialize(
-    'resource://drawable/drowning.jpg', //icon || null
-    [
-      NotificationChannel(
-        channelKey: 'Basic Key',
-        channelName: 'Test Channel',
-        channelDescription: 'Emergency Notification',
-        playSound: true,
-        channelShowBadge: true,
-        importance: NotificationImportance.High,
-        vibrationPattern: Int64List(50),
-        soundSource: "asset://row/emergency.mp3",
 
-        //icon: 'resource://drawable/blue.png'
-      )
-    ],
-  );
+  NotificationsServices notificationsServices = NotificationsServices();
+  notificationsServices.senfNotifivation();
+
   runApp(MyApp());
 }
 
