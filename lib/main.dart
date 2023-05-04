@@ -1,6 +1,7 @@
 import 'package:application/controllers/locale/locale_controller.dart';
 import 'package:application/controllers/notifications_services.dart';
 import 'package:application/views/auth/signin.dart';
+import 'package:application/views/features/dragabble.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
     Get.put(MyLocaleController());
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignIn(),
+      home: DragHome(),
       locale: Get.deviceLocale,
       //locale: controller.initialLang,
       translations: MyLocale(),

@@ -12,6 +12,8 @@ import '../widgets/location.dart';
 class Info extends StatefulWidget {
   var bpm;
   var spo2;
+  var lat;
+  var long;
   var user;
   var age;
   var phone;
@@ -22,9 +24,13 @@ class Info extends StatefulWidget {
       required spo2,
       required user,
       required age,
-      required phone}) {
+      required phone,
+      required lat,
+      required long}) {
     this.bpm = bpm;
     this.spo2 = spo2;
+    this.lat = lat;
+    this.long = long;
     this.user = user;
     this.age = age;
     this.phone = phone;
@@ -80,7 +86,6 @@ class _InfoState extends State<Info> with TickerProviderStateMixin {
                       width: double.infinity,
                       child: Column(
                         children: [
-                        
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             child: InputDecorator(
@@ -94,7 +99,7 @@ class _InfoState extends State<Info> with TickerProviderStateMixin {
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
                                 ),
-                                child: HealthStatus()),
+                                child: HealthStatus(bpm:widget.bpm,spo2:widget.spo2,lat:widget.lat,long:widget.long)),
                           ),
                           Container(
                             margin: EdgeInsets.only(bottom: 120),

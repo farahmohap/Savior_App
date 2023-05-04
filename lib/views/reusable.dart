@@ -23,7 +23,7 @@ class Location {
         position: showLocation, //position of marker
         onTap: (() {
           //setState(() {
-          Get.to(Info(bpm:GetData.bpm,spo2:GetData.spo2,user: GetData.name,age:GetData.age,phone:GetData.phone,)); //Info(bpm,spo2,showlocation)
+          //Get.to(Info(bpm:GetData.bpm,spo2:GetData.spo2,user: GetData.name,age:GetData.age,phone:GetData.phone,)); //Info(bpm,spo2,showlocation)
 
           //  });
         }),
@@ -33,7 +33,7 @@ class Location {
             snippet: 'Stable',
             onTap: (() {
               // setState(() {
-             Get.to(Info(bpm:GetData.bpm,spo2:GetData.spo2,user: GetData.name,age:GetData.age,phone:GetData.phone,));
+            // Get.to(Info(bpm:GetData.bpm,spo2:GetData.spo2,user: GetData.name,age:GetData.age,phone:GetData.phone,));
               // });
             })),
         icon: BitmapDescriptor.defaultMarker, //Icon for Marker

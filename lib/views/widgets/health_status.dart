@@ -1,5 +1,4 @@
 import 'package:application/controllers/notifications_services.dart';
-import 'package:application/models/getdata.dart';
 import 'package:application/views/styles.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
@@ -12,14 +11,15 @@ import 'dart:core';
 class HealthStatus extends StatefulWidget {
   var bpm;
   var spo2;
+  var lat;
+  var long;
 
-  // HealthStatus({
-  //   required bpm,
-  //   required spo2,
-  // }) {
-  //   this.bpm = bpm;
-  //   this.spo2 = spo2;
-  // }
+  HealthStatus({required bpm, required spo2, required lat, required long}) {
+    this.bpm = bpm;
+    this.spo2 = spo2;
+    this.lat = lat;
+    this.long = long;
+  }
 
   @override
   State<HealthStatus> createState() => _HealthStatusState();
@@ -74,12 +74,12 @@ class _HealthStatusState extends State<HealthStatus>
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
-          final data = Map<String, dynamic>.from(snapshot.data.snapshot.value);
-          final bpm = data['heartrate'];
-          final spo2 = data['spo2'];
-          final lat = data['latitude'];
-          final long = data['longitude'];
-          if (bpm < 70) {
+          // final data = Map<String, dynamic>.from(snapshot.data.snapshot.value);
+          // final bpm = data['heartrate'];
+          // final spo2 = data['spo2'];
+          // final lat = data['latitude'];
+          // final long = data['longitude'];
+          if (widget.bpm < 70) {
             notificationsServices.senfNotifivation();
           }
           return Column(
@@ -91,7 +91,7 @@ class _HealthStatusState extends State<HealthStatus>
                   Expanded(
                     child: healthStatusItem(
                         const Color.fromARGB(255, 88, 158, 255),
-                        bpm.toString(),
+                        widget.bpm.toString(),
                         "bpm ",
                         'assests/heart.json',
                         "Heart Rate".tr,
@@ -101,7 +101,7 @@ class _HealthStatusState extends State<HealthStatus>
                   Expanded(
                     child: healthStatusItem(
                         Style.darkblue,
-                        spo2.toString(),
+                        widget.spo2.toString(),
                         "%",
                         'assests/oxygen.json',
                         "Oxygen Saturation".tr,
@@ -115,7 +115,7 @@ class _HealthStatusState extends State<HealthStatus>
                   Expanded(
                     child: healthStatusItem(
                         Color.fromARGB(255, 247, 208, 67),
-                        calculateDistance(lat, long).toString(),
+                        calculateDistance(widget.lat, widget.long).toString(),
                         " m ",
                         'assests/distance.json',
                         "Distance".tr,

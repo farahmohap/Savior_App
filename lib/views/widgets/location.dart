@@ -28,7 +28,7 @@ class _LocationState extends State<GetLocation> {
     });
   }
 
-  double calculateDistance(lat2,long2) {
+  double calculateDistance(lat2, long2) {
     var lat1 = currentLocation!.latitude!;
     var long1 = currentLocation!.longitude!;
 
@@ -101,24 +101,29 @@ class _LocationState extends State<GetLocation> {
           final data = Map<String, dynamic>.from(snapshot.data.snapshot.value);
           double lat = data['latitude'];
           double long = data['longitude'];
+          int bpm = data['bpm'];
+          int spo2 = data["spo2"];
 
           return GoogleMap(
-            //polylines: Set<Polyline>.of(polylines.values),
-            zoomControlsEnabled: false,
-            mapType: MapType.normal,
-            compassEnabled: false,
-            mapToolbarEnabled: false,
-            myLocationButtonEnabled: true,
-            cameraTargetBounds: CameraTargetBounds.unbounded,
-            initialCameraPosition: CameraPosition(
-              target: LatLng(lat, long),
-              zoom: 45,
-            ),
+              //polylines: Set<Polyline>.of(polylines.values),
+              zoomControlsEnabled: false,
+              mapType: MapType.normal,
+              compassEnabled: false,
+              mapToolbarEnabled: false,
+              myLocationButtonEnabled: true,
+              cameraTargetBounds: CameraTargetBounds.unbounded,
+              initialCameraPosition: CameraPosition(
+                target: LatLng(lat, long),
+                zoom: 45,
+              ),
+              // onMapCreated: (controller) {
+              //   mapController = controller;
+              //   setState(() {});
 
-            onMapCreated: (controller) {
-              setState(() {
-                mapController = controller;
-                markers.add(Marker(
+              //   // _getPolyline();
+              // },
+              markers: {
+                Marker(
                     markerId: MarkerId(LatLng(lat, long).toString()),
                     position: LatLng(lat, long),
                     //draggable: true,
@@ -128,20 +133,17 @@ class _LocationState extends State<GetLocation> {
                         // snippet: 'Stable',
                         onTap: (() {
                           Get.to(Info(
-                            bpm: data['heartrate'],
-                            spo2: GetData.spo2,
+                            bpm: bpm,
+                            spo2: spo2,
+                            lat: lat,
+                            long: long,
                             user: GetData.name,
                             age: GetData.age,
                             phone: GetData.phone,
                           ));
                         })),
-                    icon: BitmapDescriptor.defaultMarker));
+                    icon: BitmapDescriptor.defaultMarker)
               });
-
-              // _getPolyline();
-            },
-            markers: markers,
-          );
         },
       ),
     );
