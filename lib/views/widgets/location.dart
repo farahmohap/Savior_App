@@ -7,6 +7,8 @@ import 'package:location/location.dart';
 import 'dart:math' show cos, sqrt, asin;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../controllers/emergencyCondition.dart';
+
 class GetLocation extends StatefulWidget {
   const GetLocation({super.key});
 
@@ -19,7 +21,6 @@ class _LocationState extends State<GetLocation> {
   late GoogleMapController mapController; //controller for Google map
   // LatLng showLocation = LatLng(
   //     double.parse(GetData.latitiude!), double.parse(GetData.longitude!));
-  DatabaseReference infoRef = FirebaseDatabase.instance.ref('ESP32-v1');
   LocationData? currentLocation;
   void getCurrentLocation() {
     Location location = Location();
@@ -93,7 +94,7 @@ class _LocationState extends State<GetLocation> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<DatabaseEvent>(
-        stream: infoRef.onValue,
+        stream: EmergencyCondition.infoRef.onValue,
         builder: (context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -101,9 +102,9 @@ class _LocationState extends State<GetLocation> {
           final data = Map<String, dynamic>.from(snapshot.data.snapshot.value);
           double lat = data['latitude'];
           double long = data['longitude'];
-          int bpm = data['bpm'];
-          int spo2 = data["spo2"];
-
+          var bpm = data['heartrate'];
+          var spo2 = data["spo2"];
+          EmergencyCondition.EmergencyNotification(bpm, spo2);
           return GoogleMap(
               //polylines: Set<Polyline>.of(polylines.values),
               zoomControlsEnabled: false,

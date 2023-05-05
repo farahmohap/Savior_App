@@ -13,10 +13,14 @@ class NotificationsServices {
 
   void senfNotifivation() async {
     AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails("channel id_1", "channel name",
+       const  AndroidNotificationDetails("channel id_1", "channel name",
             importance: Importance.max,
             priority: Priority.high,
             playSound: true,
+            enableLights: true,
+            autoCancel: true,   
+            timeoutAfter: 9000,
+                    
             sound: RawResourceAndroidNotificationSound('emergency'));
     NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);

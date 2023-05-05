@@ -9,17 +9,17 @@ import 'dart:math' show cos, sqrt, asin;
 import 'dart:core';
 
 class HealthStatus extends StatefulWidget {
-  var bpm;
-  var spo2;
-  var lat;
-  var long;
+  // var bpm;
+  // var spo2;
+  // var lat;
+  // var long;
 
-  HealthStatus({required bpm, required spo2, required lat, required long}) {
-    this.bpm = bpm;
-    this.spo2 = spo2;
-    this.lat = lat;
-    this.long = long;
-  }
+  // HealthStatus({required bpm, required spo2, required lat, required long}) {
+  //   this.bpm = bpm;
+  //   this.spo2 = spo2;
+  //   this.lat = lat;
+  //   this.long = long;
+  // }
 
   @override
   State<HealthStatus> createState() => _HealthStatusState();
@@ -29,7 +29,8 @@ class _HealthStatusState extends State<HealthStatus>
     with TickerProviderStateMixin {
   late AnimationController _heartbeat;
   DatabaseReference infoRef = FirebaseDatabase.instance.ref('ESP32-v1');
-  late LocationData currentLocation;
+  LocationData? currentLocation;
+
   void getCurrentLocation() {
     Location location = Location();
     location.getLocation().then((location) {
@@ -38,8 +39,8 @@ class _HealthStatusState extends State<HealthStatus>
   }
 
   int calculateDistance(lat2, long2) {
-    var lat1 = currentLocation.latitude;
-    var long1 = currentLocation.longitude;
+    var lat1 = currentLocation!.latitude;
+    var long1 = currentLocation!.longitude!;
 
     var p = 0.017453292519943295;
     var c = cos;
@@ -63,7 +64,7 @@ class _HealthStatusState extends State<HealthStatus>
     } else {
       _heartbeat.repeat();
     }
-    notificationsServices.initialiseNotifications();
+    // notificationsServices.initialiseNotifications();
   }
 
   @override
@@ -74,12 +75,12 @@ class _HealthStatusState extends State<HealthStatus>
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
-          // final data = Map<String, dynamic>.from(snapshot.data.snapshot.value);
-          // final bpm = data['heartrate'];
-          // final spo2 = data['spo2'];
-          // final lat = data['latitude'];
-          // final long = data['longitude'];
-          if (widget.bpm < 70) {
+          final data = Map<String, dynamic>.from(snapshot.data.snapshot.value);
+          final bpm = data['heartrate'];
+          final spo2 = data['spo2'];
+          final lat = data['latitude'];
+          final long = data['longitude'];
+          if (bpm < 70) {
             notificationsServices.senfNotifivation();
           }
           return Column(
@@ -91,7 +92,7 @@ class _HealthStatusState extends State<HealthStatus>
                   Expanded(
                     child: healthStatusItem(
                         const Color.fromARGB(255, 88, 158, 255),
-                        widget.bpm.toString(),
+                        bpm.toString(),
                         "bpm ",
                         'assests/heart.json',
                         "Heart Rate".tr,
@@ -101,7 +102,7 @@ class _HealthStatusState extends State<HealthStatus>
                   Expanded(
                     child: healthStatusItem(
                         Style.darkblue,
-                        widget.spo2.toString(),
+                        spo2.toString(),
                         "%",
                         'assests/oxygen.json',
                         "Oxygen Saturation".tr,
@@ -115,7 +116,7 @@ class _HealthStatusState extends State<HealthStatus>
                   Expanded(
                     child: healthStatusItem(
                         Color.fromARGB(255, 247, 208, 67),
-                        calculateDistance(widget.lat, widget.long).toString(),
+                        calculateDistance(lat, long).toString(),
                         " m ",
                         'assests/distance.json',
                         "Distance".tr,

@@ -77,7 +77,7 @@ class _InfoState extends State<Info> with TickerProviderStateMixin {
             builder: (context, AsyncSnapshot snapshot) {
               final data =
                   Map<String, dynamic>.from(snapshot.data.snapshot.value);
-              final bpm = data['heartrate'];
+              
               return SingleChildScrollView(
                   clipBehavior: Clip.antiAlias,
                   child: Container(
@@ -99,7 +99,9 @@ class _InfoState extends State<Info> with TickerProviderStateMixin {
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
                                 ),
-                                child: HealthStatus(bpm:widget.bpm,spo2:widget.spo2,lat:widget.lat,long:widget.long)),
+                                child: HealthStatus()
+                              //  HealthStatus(bpm:widget.bpm,spo2:widget.spo2,lat:widget.lat,long:widget.long)
+                                ),
                           ),
                           Container(
                             margin: EdgeInsets.only(bottom: 120),
