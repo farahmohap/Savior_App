@@ -108,7 +108,7 @@ class _ProfileState extends State<Profile> {
       var image_url = await firebaseStorage.getDownloadURL();
       await FirebaseFirestore.instance
           .collection('users')
-          .doc(user_id)
+          .doc(user_Id)
           .update({"image": image_url}).then((value) {
         return AwesomeDialog(
           context: context,

@@ -131,7 +131,7 @@ class _SignInState extends State<SignIn> {
                                             email: data_email,
                                             password: data_password);
                                 print(userCredential);
-                                Get.to(DragHome());
+                                Get.off(DragHome());
                               } on FirebaseAuthException catch (e) {
                                 if (e.code == 'user-not-found') {
                                   print('No user found for that email');

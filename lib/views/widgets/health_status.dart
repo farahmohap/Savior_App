@@ -1,5 +1,8 @@
 import 'package:application/controllers/notifications_services.dart';
+import 'package:application/views/features/dragabble.dart';
+import 'package:application/views/features/info.dart';
 import 'package:application/views/styles.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart ' as lot;
@@ -7,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'dart:math' show cos, sqrt, asin;
 import 'dart:core';
+
+import '../../controllers/emergencyCondition.dart';
 
 class HealthStatus extends StatefulWidget {
   // var bpm;
@@ -28,7 +33,7 @@ class HealthStatus extends StatefulWidget {
 class _HealthStatusState extends State<HealthStatus>
     with TickerProviderStateMixin {
   late AnimationController _heartbeat;
-  DatabaseReference infoRef = FirebaseDatabase.instance.ref('ESP32-v1');
+
   LocationData? currentLocation;
 
   void getCurrentLocation() {
@@ -50,11 +55,12 @@ class _HealthStatusState extends State<HealthStatus>
     return (12742 * asin(sqrt(a)) * 1000).ceil();
   }
 
-  NotificationsServices notificationsServices = NotificationsServices();
+  
 
   @override
   void initState() {
     super.initState();
+    
     getCurrentLocation();
     _heartbeat =
         AnimationController(vsync: this, duration: const Duration(seconds: 3));
@@ -64,13 +70,12 @@ class _HealthStatusState extends State<HealthStatus>
     } else {
       _heartbeat.repeat();
     }
-    // notificationsServices.initialiseNotifications();
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DatabaseEvent>(
-        stream: infoRef.onValue,
+        stream: EmergencyCondition.infoRef.onValue,
         builder: (context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -80,13 +85,28 @@ class _HealthStatusState extends State<HealthStatus>
           final spo2 = data['spo2'];
           final lat = data['latitude'];
           final long = data['longitude'];
-          if (bpm < 70) {
-            notificationsServices.senfNotifivation();
-          }
+          EmergencyCondition.EmergencyNotification(bpm, spo2);
+          // AwesomeNotifications().requestPermissionToSendNotifications();
+          // if (bpm > 100 || bpm <= 60 || spo2 < 90) {
+          //   AwesomeNotifications().createNotification(
+          //     content: NotificationContent(
+          //         id: 1,
+          //         channelKey: 'channelKey',
+          //         title: 'Test',
+          //         body: 'Testtt'),
+          //     actionButtons: <NotificationActionButton>[
+          //       NotificationActionButton(
+          //           key: 'yes',
+          //           label: 'Yes',
+          //           actionType: ActionType.DisabledAction),
+          //       NotificationActionButton(key: 'no', label: 'No'),
+
+          //     ],
+          //   );
+          // }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // for (int i = 0; i < GetData.data.length; i++)
               Row(
                 children: [
                   Expanded(

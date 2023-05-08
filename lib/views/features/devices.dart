@@ -104,16 +104,16 @@ class _DevicesState extends State<Devices> {
         appBar: AppBar(
           centerTitle: true,
           actions: [
-            Image.asset(
-              "images/notification.png",
-              height: 35,
-            ),
+            // Image.asset(
+            //   "images/notification.png",
+            //   height: 35,
+            // ),
             Image.asset(
               "images/user.png",
               height: 35,
             )
           ],
-          leading: Icon(Icons.search),
+          //leading: Icon(Icons.search),
           backgroundColor: Style.darkblue,
           title: Text("Devices".tr),
         ),
@@ -128,10 +128,11 @@ class _DevicesState extends State<Devices> {
                       Map<String, dynamic>.from(snapshot.data.snapshot.value);
                   final bpm = data['heartrate'];
                   final spo2 = data['spo2'];
-                  EmergencyCondition.EmergencyNotification(bpm, spo2);
+
+                 EmergencyCondition.EmergencyNotification(bpm, spo2);
                   return Container(
                     margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 228, 231, 232),
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: ListView(

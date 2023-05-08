@@ -20,14 +20,23 @@ void main() async {
   );
   NotificationsServices notificationsServices = NotificationsServices();
   notificationsServices.initialiseNotifications();
-  
+
+  // AwesomeNotifications().initialize(null, [
+  //   NotificationChannel(
+  //     channelKey: 'channelKey',
+  //     channelName: 'channelName', 
+  //     channelDescription: 'channelDescription',
+  //     playSound: true,
+  //     channelShowBadge: true,      
+  //     )
+  // ]);
 
   runApp(MyApp());
   
 }
 
 class MyApp extends StatefulWidget {
-  MyApp({super.key});
+   MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -40,7 +49,7 @@ class _MyAppState extends State<MyApp> {
     Get.put(MyLocaleController());
     return  GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          home: DragHome(),
+          home: SignIn(),
           locale: Get.deviceLocale,
           //locale: controller.initialLang,
           translations: MyLocale(),

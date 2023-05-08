@@ -23,6 +23,7 @@ class _DragHomeState extends State<DragHome> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     int number = 122;
     return StreamBuilder<DatabaseEvent>(
+       //initialData:  initialData,
         stream: EmergencyCondition.infoRef.onValue,
         builder: (context, AsyncSnapshot snapshot) {
           final data = Map<String, dynamic>.from(snapshot.data.snapshot.value);
@@ -36,12 +37,12 @@ class _DragHomeState extends State<DragHome> with TickerProviderStateMixin {
             centerTitle: true,
             alwaysShowLeadingAndAction: true,
             appBarColor: Style.darkblue.withOpacity(.8),
-            leading: Icon(Icons.search),
+            //leading: Icon(Icons.search),
             actions: [
-              Image.asset(
-                "images/notification.png",
-                height: 35,
-              ),
+              // Image.asset(
+              //   "images/notification.png",
+              //   height: 35,
+              // ),
               GestureDetector(
                 onTap: () {
                   Get.to(Settingss());

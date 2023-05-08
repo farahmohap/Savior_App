@@ -1,3 +1,4 @@
+import 'package:application/controllers/emergencyCondition.dart';
 import 'package:application/controllers/notifications_services.dart';
 import 'package:application/models/getdata.dart';
 import 'package:application/views/reusable.dart';
@@ -20,13 +21,13 @@ class Info extends StatefulWidget {
 
   Info(
       {super.key,
-      required bpm,
-      required spo2,
-      required user,
-      required age,
-      required phone,
-      required lat,
-      required long}) {
+       bpm,
+       spo2,
+       user,
+       age,
+       phone,
+       lat,
+       long}) {
     this.bpm = bpm;
     this.spo2 = spo2;
     this.lat = lat;
@@ -41,21 +42,16 @@ class Info extends StatefulWidget {
 }
 
 class _InfoState extends State<Info> with TickerProviderStateMixin {
-  NotificationsServices notificationsServices = NotificationsServices();
   @override
   void initState() {
-    super.initState();
-    // GetData.getData();
+    super.initState();  
     Location.getMapp(context);
-    // GetData.notificationRequest();
-    // GetData.notificationAction();
-    notificationsServices.initialiseNotifications();
+    
   }
 
   @override
   Widget build(BuildContext context) {
-    final databaseReference = FirebaseDatabase.instance.ref().child('ESP32-v1');
-
+   
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -73,11 +69,8 @@ class _InfoState extends State<Info> with TickerProviderStateMixin {
         extendBody: true,
         bottomNavigationBar: Nav.getNav(context, 1),
         body: StreamBuilder<DatabaseEvent>(
-            stream: databaseReference.onValue,
-            builder: (context, AsyncSnapshot snapshot) {
-              final data =
-                  Map<String, dynamic>.from(snapshot.data.snapshot.value);
-              
+            stream: EmergencyCondition.infoRef.onValue,
+            builder: (context, AsyncSnapshot snapshot) {                    
               return SingleChildScrollView(
                   clipBehavior: Clip.antiAlias,
                   child: Container(

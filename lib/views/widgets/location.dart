@@ -3,7 +3,6 @@ import 'package:application/views/features/info.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:location/location.dart';
 import 'dart:math' show cos, sqrt, asin;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -19,27 +18,25 @@ class GetLocation extends StatefulWidget {
 class _LocationState extends State<GetLocation> {
   final Set<Marker> markers = {}; //markers for google map
   late GoogleMapController mapController; //controller for Google map
-  // LatLng showLocation = LatLng(
-  //     double.parse(GetData.latitiude!), double.parse(GetData.longitude!));
-  LocationData? currentLocation;
-  void getCurrentLocation() {
-    Location location = Location();
-    location.getLocation().then((location) {
-      currentLocation = location;
+  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+  void changeMarkerIcon() async {
+    BitmapDescriptor.fromAssetImage(
+            const ImageConfiguration(), "images/swimmarker.png")
+        .then((icon) {
+        
+      setState(() {
+        markerIcon = icon;
+      });
     });
   }
 
-  double calculateDistance(lat2, long2) {
-    var lat1 = currentLocation!.latitude!;
-    var long1 = currentLocation!.longitude!;
-
-    var p = 0.017453292519943295;
-    var c = cos;
-    var a = 0.5 -
-        c((lat2 - lat1) * p) / 2 +
-        c(lat1 * p) * c(lat2 * p) * (1 - c((long2 - long1) * p)) / 2;
-    return 12742 * asin(sqrt(a));
+  @override
+  void initState() {
+    changeMarkerIcon();
+    super.initState();
+    
   }
+
   // Set<Marker> getmarkers() {
   //   //markers to place on map
   //   // setState(() {
@@ -84,13 +81,6 @@ class _LocationState extends State<GetLocation> {
   // }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    //infoRef.onValue.listen((event) {});
-    getCurrentLocation();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<DatabaseEvent>(
@@ -107,7 +97,7 @@ class _LocationState extends State<GetLocation> {
           EmergencyCondition.EmergencyNotification(bpm, spo2);
           return GoogleMap(
               //polylines: Set<Polyline>.of(polylines.values),
-              zoomControlsEnabled: false,
+              zoomControlsEnabled: true,
               mapType: MapType.normal,
               compassEnabled: false,
               mapToolbarEnabled: false,
@@ -115,7 +105,7 @@ class _LocationState extends State<GetLocation> {
               cameraTargetBounds: CameraTargetBounds.unbounded,
               initialCameraPosition: CameraPosition(
                 target: LatLng(lat, long),
-                zoom: 45,
+                zoom: 25,
               ),
               // onMapCreated: (controller) {
               //   mapController = controller;
@@ -123,6 +113,7 @@ class _LocationState extends State<GetLocation> {
 
               //   // _getPolyline();
               // },
+
               markers: {
                 Marker(
                     markerId: MarkerId(LatLng(lat, long).toString()),
@@ -130,7 +121,7 @@ class _LocationState extends State<GetLocation> {
                     //draggable: true,
                     infoWindow: InfoWindow(
                         //popup info
-                        title: 'Stable', //GetData.data['deviceid']
+                        title: 'Info', //GetData.data['deviceid']
                         // snippet: 'Stable',
                         onTap: (() {
                           Get.to(Info(
@@ -143,7 +134,7 @@ class _LocationState extends State<GetLocation> {
                             phone: GetData.phone,
                           ));
                         })),
-                    icon: BitmapDescriptor.defaultMarker)
+                    icon: markerIcon)
               });
         },
       ),

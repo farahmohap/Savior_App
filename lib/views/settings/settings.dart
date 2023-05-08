@@ -98,7 +98,7 @@ class _SettingssState extends State<Settingss> {
                       Map<String, dynamic>.from(snapshot.data.snapshot.value);
                   final bpm = data['heartrate'];
                   final spo2 = data['spo2'];
-                  EmergencyCondition.EmergencyNotification(bpm, spo2);
+                 EmergencyCondition.EmergencyNotification(bpm, spo2);
                   return Column(children: [
                     SizedBox(
                       height: 30,
