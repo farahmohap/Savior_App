@@ -56,7 +56,7 @@ packages:
       name: awesome_notifications
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.4+1"
+    version: "0.6.21"
   bloc:
     dependency: transitive
     description:
@@ -861,13 +861,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
-  switcher:
-    dependency: "direct main"
-    description:
-      name: switcher
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   synchronized:
     dependency: transitive
     description:

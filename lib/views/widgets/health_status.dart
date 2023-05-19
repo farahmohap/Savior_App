@@ -43,24 +43,32 @@ class _HealthStatusState extends State<HealthStatus>
     });
   }
 
-  int calculateDistance(lat2, long2) {
-    var lat1 = currentLocation!.latitude;
-    var long1 = currentLocation!.longitude!;
+  changeIcon(data, normalpath) {
+    if (data == -999) {
+      return "assests/error.json";
+    } else {
+      return normalpath;
+    }
+  }
+
+  static int calculateDistance(lat2, long2) {
+    // var lat1 = currentLocation!.latitude;
+    // var long1 = currentLocation!.longitude!;
+    var lat1 = 30.56302530323952;
+    var long1 = 31.008665684335686;
 
     var p = 0.017453292519943295;
     var c = cos;
     var a = 0.5 -
         c((lat2 - lat1) * p) / 2 +
-        c(lat1! * p) * c(lat2 * p) * (1 - c((long2 - long1) * p)) / 2;
+        c(lat1 * p) * c(lat2 * p) * (1 - c((long2 - long1) * p)) / 2;
     return (12742 * asin(sqrt(a)) * 1000).ceil();
   }
-
-  
 
   @override
   void initState() {
     super.initState();
-    
+
     getCurrentLocation();
     _heartbeat =
         AnimationController(vsync: this, duration: const Duration(seconds: 3));
@@ -79,74 +87,62 @@ class _HealthStatusState extends State<HealthStatus>
         builder: (context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
+          } else {
+            final data =
+                Map<String, dynamic>.from(snapshot.data.snapshot.value);
+            double lat = data['lat'];
+            double long = data['lon'];
+            var bpm = data['heartrate'];
+            var spo2 = data["spo2"];
+            var time = data["time"];
+           // EmergencyCondition.EmergencyNotification(bpm, spo2);
+            //EmergencyCondition.ConstatntTimeNotification(time);
+            //EmergencyCondition.DistanceNotification(lat, long);
+            EmergencyCondition.NoResponseData(bpm, spo2);
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: healthStatusItem(
+                          const Color.fromARGB(255, 88, 158, 255),
+                          bpm.toString(),
+                          "bpm ",
+                          changeIcon(bpm, 'assests/heart.json'),
+                          "Heart Rate".tr,
+                          72,
+                          19),
+                    ),
+                    Expanded(
+                      child: healthStatusItem(
+                          Style.darkblue,
+                          spo2.toString(),
+                          "%",
+                          'assests/oxygen.json',
+                          "Oxygen Saturation".tr,
+                          70,
+                          16),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: healthStatusItem(
+                          Color.fromARGB(255, 247, 208, 67),
+                          calculateDistance(lat, long).toString(),
+                          " m ",
+                          'assests/distance.json',
+                          "Distance".tr,
+                          60,
+                          25),
+                    ),
+                  ],
+                ),
+              ],
+            );
           }
-          final data = Map<String, dynamic>.from(snapshot.data.snapshot.value);
-          final bpm = data['heartrate'];
-          final spo2 = data['spo2'];
-          final lat = data['latitude'];
-          final long = data['longitude'];
-          EmergencyCondition.EmergencyNotification(bpm, spo2);
-          // AwesomeNotifications().requestPermissionToSendNotifications();
-          // if (bpm > 100 || bpm <= 60 || spo2 < 90) {
-          //   AwesomeNotifications().createNotification(
-          //     content: NotificationContent(
-          //         id: 1,
-          //         channelKey: 'channelKey',
-          //         title: 'Test',
-          //         body: 'Testtt'),
-          //     actionButtons: <NotificationActionButton>[
-          //       NotificationActionButton(
-          //           key: 'yes',
-          //           label: 'Yes',
-          //           actionType: ActionType.DisabledAction),
-          //       NotificationActionButton(key: 'no', label: 'No'),
-
-          //     ],
-          //   );
-          // }
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: healthStatusItem(
-                        const Color.fromARGB(255, 88, 158, 255),
-                        bpm.toString(),
-                        "bpm ",
-                        'assests/heart.json',
-                        "Heart Rate".tr,
-                        72,
-                        19),
-                  ),
-                  Expanded(
-                    child: healthStatusItem(
-                        Style.darkblue,
-                        spo2.toString(),
-                        "%",
-                        'assests/oxygen.json',
-                        "Oxygen Saturation".tr,
-                        70,
-                        16),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: healthStatusItem(
-                        Color.fromARGB(255, 247, 208, 67),
-                        calculateDistance(lat, long).toString(),
-                        " m ",
-                        'assests/distance.json',
-                        "Distance".tr,
-                        60,
-                        25),
-                  ),
-                ],
-              ),
-            ],
-          );
         });
   }
 

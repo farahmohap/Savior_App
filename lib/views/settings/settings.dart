@@ -94,11 +94,23 @@ class _SettingssState extends State<Settingss> {
             child: StreamBuilder<DatabaseEvent>(
                 stream: EmergencyCondition.infoRef.onValue,
                 builder: (context, AsyncSnapshot snapshot) {
+                  if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          else{
+             }
                   final data =
                       Map<String, dynamic>.from(snapshot.data.snapshot.value);
-                  final bpm = data['heartrate'];
-                  final spo2 = data['spo2'];
-                 EmergencyCondition.EmergencyNotification(bpm, spo2);
+                  double lat = data['lat'];
+                  double long = data['lon'];
+                  var bpm = data['heartrate'];
+                  var spo2 = data["spo2"];
+                  var time = data["time"];
+              // EmergencyCondition.EmergencyNotification(bpm, spo2);
+              // EmergencyCondition.ConstatntTimeNotification(time);
+              // EmergencyCondition.DistanceNotification(lat, long);
+              // EmergencyCondition.NoResponseData(bpm, spo2);
+
                   return Column(children: [
                     SizedBox(
                       height: 30,
@@ -141,8 +153,7 @@ class _SettingssState extends State<Settingss> {
                           leading: CircleAvatar(
                               radius: 18, child: Icon(Icons.language_sharp)),
                           title: Text("Language".tr),
-                           trailing: 
-                          ToggleSwitch(
+                          trailing: ToggleSwitch(
                             minWidth: 35,
                             minHeight: 20,
                             fontSize: 10.0,
@@ -150,7 +161,6 @@ class _SettingssState extends State<Settingss> {
                             activeBgColor: const [
                               Color.fromARGB(255, 216, 2, 2),
                             ],
-                           
                             activeFgColor: Colors.white,
                             inactiveBgColor: Color.fromARGB(255, 196, 193, 193),
                             inactiveFgColor: Colors.grey[900],
@@ -203,7 +213,7 @@ class _SettingssState extends State<Settingss> {
                     ),
                     Container(
                       margin: EdgeInsets.all(10),
-                      decoration:const  BoxDecoration(
+                      decoration: const BoxDecoration(
                           color: Color.fromARGB(255, 255, 255, 255),
                           borderRadius: BorderRadius.all(Radius.circular(11))),
                       child: Column(children: [
@@ -280,43 +290,43 @@ class _SettingssState extends State<Settingss> {
                         )
                       ]),
                     ),
-                     Container(
-                       margin: EdgeInsets.all(10),
+                    Container(
+                      margin: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           color: Color.fromARGB(255, 255, 255, 255),
                           borderRadius: BorderRadius.all(Radius.circular(11))),
-                       child: ListTile(
-                            onTap: () {
-                                AwesomeDialog(
-                                  context: context,
-                                  dialogType: DialogType.question,
-                                  animType: AnimType.rightSlide,
-                                  title: 'Are You Sure To Exit ?',
-                                  btnOkOnPress: () {
-                                    SystemNavigator.pop();
-                                  },
-                                  btnCancelOnPress: () {
-                                    Navigator.canPop(context);
-                                  })
-                                ..show();
-                            },
-                            
-                            leading:const  CircleAvatar(
-                              backgroundColor: Colors.red,
-                              child: Icon(
-                                Icons.logout,
-                                color: Colors.black,
-                              ),
-                            ),
-                            title: Text(
-                              "Log Out",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
+                      child: ListTile(
+                        onTap: () {
+                          AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.question,
+                              animType: AnimType.rightSlide,
+                              title: 'Are You Sure To Exit ?',
+                              btnOkOnPress: () {
+                                SystemNavigator.pop();
+                              },
+                              btnCancelOnPress: () {
+                                Navigator.canPop(context);
+                              })
+                            ..show();
+                        },
+                        leading: const CircleAvatar(
+                          backgroundColor: Colors.red,
+                          child: Icon(
+                            Icons.logout,
+                            color: Colors.black,
                           ),
-                     ),
-                        
+                        ),
+                        title: Text(
+                          "Log Out",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
                   ]);
                 }),
+          
+         
           ),
         ),
       ),

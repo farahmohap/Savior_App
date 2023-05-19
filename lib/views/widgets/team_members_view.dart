@@ -7,8 +7,8 @@ import '../../models/authclass.dart';
 import '../../models/getdata.dart';
 
 class TeamMembersView extends StatelessWidget {
-   TeamMembersView({super.key});
- final storage = FirebaseStorage.instance;
+  TeamMembersView({super.key});
+  final storage = FirebaseStorage.instance;
   GetAuth getAuth = GetAuth();
   List images_URL = [];
 
@@ -33,7 +33,7 @@ class TeamMembersView extends StatelessWidget {
 
   @override
   void initState() {
-   // GetData.getData();
+    // GetData.getData();
     FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     final userId = user?.uid;
@@ -45,36 +45,37 @@ class TeamMembersView extends StatelessWidget {
     //   GetData.hrate(context);
     // });
   }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-            future: getAllNames(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: images_URL.length,
-                    itemBuilder: ((context, index) {
-                      return Row(
-                        children: [
-                          Container(
-                              width: 50,
-                              height: 50,
-                              decoration: new BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: new DecorationImage(
-                                    image: new NetworkImage(images_URL[index]),
-                                  ))),
-                          SizedBox(
-                            width: 5,
-                          )
-                        ],
-                      );
-                    }));
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            },
-          );
+      future: getAllNames(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: images_URL.length,
+              itemBuilder: ((context, index) {
+                return Row(
+                  children: [
+                    Container(
+                        width: 50,
+                        height: 50,
+                        decoration: new BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: new DecorationImage(
+                              image: new NetworkImage(images_URL[index]),
+                            ))),
+                    SizedBox(
+                      width: 5,
+                    )
+                  ],
+                );
+              }));
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
+    );
   }
 }

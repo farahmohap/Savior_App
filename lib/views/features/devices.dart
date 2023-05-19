@@ -124,87 +124,97 @@ class _DevicesState extends State<Devices> {
             child: StreamBuilder<DatabaseEvent>(
                 stream: EmergencyCondition.infoRef.onValue,
                 builder: (context, AsyncSnapshot snapshot) {
-                  final data =
-                      Map<String, dynamic>.from(snapshot.data.snapshot.value);
-                  final bpm = data['heartrate'];
-                  final spo2 = data['spo2'];
+                  if (!snapshot.hasData) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    final data =
+                        Map<String, dynamic>.from(snapshot.data.snapshot.value);
+                    double lat = data['lat'];
+                    double long = data['lon'];
+                    var bpm = data['heartrate'];
+                    var spo2 = data["spo2"];
+                    var time = data["time"];
+              //       EmergencyCondition.EmergencyNotification(bpm, spo2);
+              // EmergencyCondition.ConstatntTimeNotification(time);
+              // EmergencyCondition.DistanceNotification(lat, long);
+              // EmergencyCondition.NoResponseData(bpm, spo2);
+                    return Container(
+                      margin: EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 228, 231, 232),
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      child: ListView(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(5),
+                            child: FirebaseAnimatedList(
+                              shrinkWrap: true,
+                              query: ConnectUser.ref,
+                              itemBuilder: ((context, snapshot, animation,
+                                      index) =>
+                                  Card(
+                                    color: Color.fromARGB(255, 192, 211, 237),
+                                    child: ListTile(
+                                      leading:
+                                          ('${snapshot.child('status').value.toString()}' ==
+                                                  "on")
+                                              ? Icon(Icons.check)
+                                              : Icon(Icons.not_interested),
 
-                 EmergencyCondition.EmergencyNotification(bpm, spo2);
-                  return Container(
-                    margin: EdgeInsets.all(10),
-                    decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 228, 231, 232),
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: ListView(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(5),
-                          child: FirebaseAnimatedList(
-                            shrinkWrap: true,
-                            query: ConnectUser.ref,
-                            itemBuilder: ((context, snapshot, animation,
-                                    index) =>
-                                Card(
-                                  color: Color.fromARGB(255, 192, 211, 237),
-                                  child: ListTile(
-                                    leading:
-                                        ('${snapshot.child('status').value.toString()}' ==
-                                                "on")
-                                            ? Icon(Icons.check)
-                                            : Icon(Icons.not_interested),
+                                      // Icon(Icons.connect_without_contact),
+                                      title: Text("Device Number $index"),
+                                      subtitle: Column(children: [
+                                        Text(
+                                            "Code :  ${snapshot.child('code').value.toString()}"),
+                                        Text(
+                                            "Status : ${snapshot.child('status').value.toString()}")
+                                      ]),
+                                      trailing: SizedBox(
+                                        width: 78,
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 15,
+                                              backgroundColor: Colors.green,
+                                              child: IconButton(
+                                                iconSize: 15,
+                                                icon: Icon(
+                                                  Icons
+                                                      .app_registration_rounded,
+                                                  color: Colors.white,
+                                                ),
+                                                onPressed: () {
+                                                  ConnectUser.getDialog(
+                                                      context, snapshot, index);
 
-                                    // Icon(Icons.connect_without_contact),
-                                    title: Text("Device Number $index"),
-                                    subtitle: Column(children: [
-                                      Text(
-                                          "Code :  ${snapshot.child('code').value.toString()}"),
-                                      Text(
-                                          "Status : ${snapshot.child('status').value.toString()}")
-                                    ]),
-                                    trailing: SizedBox(
-                                      width: 78,
-                                      child: Row(
-                                        children: [
-                                          CircleAvatar(
-                                            radius: 15,
-                                            backgroundColor: Colors.green,
-                                            child: IconButton(
-                                              iconSize: 15,
+                                                  setState(() {});
+                                                },
+                                              ),
+                                            ),
+                                            IconButton(
+                                              iconSize: 30,
                                               icon: Icon(
-                                                Icons.app_registration_rounded,
-                                                color: Colors.white,
+                                                Icons.delete_forever,
+                                                color: Colors.red,
                                               ),
                                               onPressed: () {
-                                                ConnectUser.getDialog(
-                                                    context, snapshot, index);
-
-                                                setState(() {});
+                                                ConnectUser.ref
+                                                    .child(
+                                                        snapshot.key.toString())
+                                                    .remove();
                                               },
                                             ),
-                                          ),
-                                          IconButton(
-                                            iconSize: 30,
-                                            icon: Icon(
-                                              Icons.delete_forever,
-                                              color: Colors.red,
-                                            ),
-                                            onPressed: () {
-                                              ConnectUser.ref
-                                                  .child(
-                                                      snapshot.key.toString())
-                                                  .remove();
-                                            },
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                )),
+                                  )),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
+                        ],
+                      ),
+                    );
+                  }
                 })));
   }
 }

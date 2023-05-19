@@ -1,3 +1,4 @@
+import 'package:application/views/features/data_history.dart';
 import 'package:flutter/material.dart';
 import 'package:application/views/features/devices.dart';
 import 'package:application/views/features/mapp.dart';
@@ -37,7 +38,7 @@ class _ServicesHomeState extends State<ServicesHome>
               height: size.height * .02,
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              service('History', DragHome(), 'images/history.png'),
+              service('History', DataHistory(), 'images/history.png'),
               service('Settings', Settingss(), 'images/settings.png'),
             ]),
           ],

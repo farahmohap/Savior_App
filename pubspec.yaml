@@ -69,12 +69,11 @@ dependencies:
   toggle_switch: ^2.0.1
   awesome_dialog: ^3.0.2
   image_picker: ^0.8.6+1
-  awesome_notifications: ^0.7.4+1
+  awesome_notifications: ^0.6.19
   flutter_local_notifications: ^14.0.0+1
   flutter_background_service: ^2.4.6
   carousel_slider: ^4.2.1
   rolling_switch: ^0.0.2
-  switcher: any
   provider: ^6.0.5
 
 
