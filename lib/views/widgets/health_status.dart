@@ -5,7 +5,7 @@ import 'package:application/views/styles.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart ' as lot;
+import 'package:lottie/lottie.dart' as lot;
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'dart:math' show cos, sqrt, asin;
